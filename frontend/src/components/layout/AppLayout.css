@@ -1,0 +1,120 @@
+.app-layout {
+  min-height: 100vh;
+  background: var(--color-bg);
+}
+
+/* ---- Global animated background ---- */
+/* Fixed to the viewport, rendered once at the layout level so it appears
+   behind the header, sidebar, and every page routed through AppLayout
+   (Dashboard, Students, Teachers, Courses, Enrollments, Grades, Profile...). */
+.app-bg {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.app-bg__blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: 0.32;
+  will-change: transform;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
+.app-bg__blob--1 {
+  width: 560px;
+  height: 560px;
+  top: -14%;
+  left: -10%;
+  background: radial-gradient(circle at 30% 30%, var(--color-primary) 0%, transparent 70%);
+  animation-name: blob-float-a;
+  animation-duration: 22s;
+}
+
+.app-bg__blob--2 {
+  width: 500px;
+  height: 500px;
+  bottom: -16%;
+  right: -8%;
+  background: radial-gradient(circle at 70% 70%, var(--color-secondary) 0%, transparent 70%);
+  animation-name: blob-float-b;
+  animation-duration: 27s;
+  animation-delay: -6s;
+}
+
+.app-bg__blob--3 {
+  width: 380px;
+  height: 380px;
+  top: 32%;
+  right: 4%;
+  background: radial-gradient(circle, var(--color-accent-blue) 0%, transparent 72%);
+  opacity: 0.18;
+  animation-name: blob-float-c;
+  animation-duration: 19s;
+  animation-delay: -11s;
+}
+
+.app-bg__blob--4 {
+  width: 340px;
+  height: 340px;
+  bottom: 6%;
+  left: 6%;
+  background: radial-gradient(circle, var(--color-primary-dark) 0%, transparent 72%);
+  opacity: 0.16;
+  animation-name: blob-float-d;
+  animation-duration: 30s;
+  animation-delay: -3s;
+}
+
+@keyframes blob-float-a {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(36px, -26px) scale(1.06); }
+}
+
+@keyframes blob-float-b {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-32px, 24px) scale(0.95); }
+}
+
+@keyframes blob-float-c {
+  0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); }
+  50% { transform: translate(-24px, 30px) rotate(4deg) scale(1.07); }
+}
+
+@keyframes blob-float-d {
+  0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); }
+  50% { transform: translate(28px, -18px) rotate(-3deg) scale(1.05); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .app-bg__blob {
+    animation: none;
+  }
+}
+
+.app-layout__body {
+  display: flex;
+  padding-top: var(--header-height);
+  min-height: 100vh;
+}
+
+.app-layout__content {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  min-width: 0;
+  padding: var(--space-6);
+  width: 100%;
+  max-width: 1400px;
+  margin-inline: auto;
+}
+
+@media (max-width: 768px) {
+  .app-layout__content {
+    padding: var(--space-4);
+  }
+}

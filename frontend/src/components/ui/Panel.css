@@ -1,0 +1,325 @@
+.panel {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+}
+
+.panel__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-5) var(--space-5) var(--space-4);
+}
+
+.panel__title {
+  font-size: var(--fs-md);
+  font-weight: var(--fw-semibold);
+}
+
+.panel__subtitle {
+  font-size: var(--fs-xs);
+  color: var(--color-text-muted);
+  margin-top: 2px;
+}
+
+.panel__body {
+  padding: 0 var(--space-5) var(--space-5);
+}
+
+.panel__body--flush {
+  padding: 0;
+}
+
+.dashboard-grid {
+  display: grid;
+  gap: var(--space-5);
+}
+
+.dashboard-grid--stats {
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  margin-bottom: var(--space-5);
+}
+
+.dashboard-grid--charts {
+  grid-template-columns: 1.4fr 1fr;
+  margin-bottom: var(--space-5);
+}
+
+.dashboard-grid--split {
+  grid-template-columns: 1fr 1fr;
+}
+
+@media (max-width: 900px) {
+
+  .dashboard-grid--charts,
+  .dashboard-grid--split {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* =========================================================
+   WELCOME CARD
+   ========================================================= */
+
+.welcome-card {
+  position: relative;
+
+  display: flex;
+  align-items: stretch;
+
+  width: 100%;
+  min-height: 190px;
+
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-md);
+
+  margin-bottom: var(--space-6);
+
+  /*
+    مهم:
+    يسمح للأفاتار إنه يطلع فوق حدود الكارد
+  */
+  overflow: visible;
+}
+
+
+/* =========================================================
+   TEXT SIDE
+   ========================================================= */
+
+.welcome-card__left {
+  position: relative;
+  z-index: 3;
+  /*
+    النص = تقريبًا نصف الكارد
+  */
+  flex: 0 0 50%;
+  width: 50%;
+
+  min-width: 0;
+
+  margin: var(--space-6);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.welcome-card__eyebrow {
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semibold);
+  color: var(--color-primary-dark);
+
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+
+  margin-bottom: var(--space-1);
+}
+
+.welcome-card__title {
+  font-size: var(--fs-2xl);
+  line-height: 1.2;
+}
+
+.welcome-card__subtitle {
+  color: var(--color-text-muted);
+  font-size: var(--fs-sm);
+
+  margin-top: var(--space-2);
+
+  max-width: 480px;
+}
+
+
+/* =========================================================
+   BUTTON / ACTIONS
+   ========================================================= */
+
+.welcome-card__actions {
+  display: flex;
+  align-items: center;
+  margin-top: var(--space-5);
+}
+
+
+/* =========================================================
+   AVATAR SIDE
+   ========================================================= */
+
+.welcome-card__illustration {
+  position: relative;
+  z-index: 1;
+  flex: 0 0 50%;
+  width: 50%;
+  min-width: 0;
+  height: 190px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+
+  margin: 0;
+}
+
+
+/* =========================================================
+   AVATAR IMAGE
+   ========================================================= */
+
+.welcome-card__image {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  display: block;
+  width: 88%;
+  height: auto;
+  max-width: none;
+  bottom: 0;
+  max-height: 233px;
+  object-fit: contain;
+  object-position: center bottom;
+  z-index: 2;
+}
+
+
+/* =========================================================
+
+   TABLET
+
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+  .welcome-card {
+    min-height: 175px;
+
+  }
+
+  .welcome-card__left {
+    margin: var(--space-5);
+
+  }
+
+  .welcome-card__title {
+    font-size: var(--fs-xl);
+
+  }
+
+  .welcome-card__subtitle {
+    font-size: var(--fs-sm);
+
+  }
+
+  .welcome-card__actions {
+    margin-top: var(--space-4);
+
+  }
+
+  .welcome-card__illustration {
+    flex-basis: 48%;
+    width: 48%;
+    height: 175px;
+  }
+
+  .welcome-card__image {
+    width: 92%;
+    max-height: 195px;
+  }
+
+}
+
+@media (max-width: 800px) {
+
+    .welcome-card__illustration {
+    flex-basis: 43%;
+    width: 48%;
+    height: 175px;
+  }
+
+}
+/* =========================================================
+   WELCOME CARD — responsive (<=800px): stacked layout
+   ========================================================= */
+
+@media (max-width: 600px) {
+  .welcome-card {
+    flex-direction: column;
+    align-items: stretch;
+    min-height: 0;
+    overflow: hidden; /* the illustration row clips cleanly now */
+  }
+
+  .welcome-card__left {
+    flex: 0 0 auto;
+    width: 100%;
+    margin: var(--space-5) var(--space-5) 0;
+    z-index: 3;
+  }
+
+  .welcome-card__title {
+    font-size: var(--fs-xl);
+  }
+
+  .welcome-card__subtitle {
+    font-size: var(--fs-sm);
+  }
+
+  .welcome-card__actions {
+    margin-top: var(--space-4);
+  }
+
+  .welcome-card__illustration {
+    position: relative;
+    z-index: 1;
+    flex: 0 0 auto;
+    width: 100%;
+    height: 130px;
+    margin-top: calc(-1 * var(--space-6));
+    justify-content: flex-end;
+    padding-right: var(--space-5);
+  }
+
+  .welcome-card__image {
+    width: auto;
+    left: auto;
+    right: var(--space-5);
+    transform: none;
+    max-width: 55%;
+    max-height: 165px;
+  }
+}
+
+@media (max-width: 400px) {
+  .welcome-card__left {
+    margin: var(--space-4) var(--space-4) 0;
+  }
+
+  .welcome-card__eyebrow {
+    font-size: 9px;
+  }
+
+  .welcome-card__title {
+    font-size: var(--fs-lg);
+  }
+
+  .welcome-card__subtitle {
+    font-size: var(--fs-xs);
+  }
+
+  .welcome-card__illustration {
+    height: 110px;
+    margin-top: calc(-1 * var(--space-5));
+    padding-right: var(--space-4);
+  }
+
+  .welcome-card__image {
+    right: var(--space-4);
+    max-width: 60%;
+    max-height: 140px;
+  }
+}

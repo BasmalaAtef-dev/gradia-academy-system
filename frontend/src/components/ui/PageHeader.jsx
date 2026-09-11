@@ -1,0 +1,14 @@
+import './PageHeader.css';
+
+export function PageHeader({ eyebrow, title, subtitle, actions }) {
+  return (
+    <div className="page-header">
+      <div>
+        {eyebrow && <div className="page-header__eyebrow">{eyebrow}</div>}
+        <h1 className="page-header__title">{title}</h1>
+        {subtitle && <p className="page-header__subtitle">{subtitle}</p>}
+      </div>
+      {actions && <div className="page-header__actions">{actions}</div>}
+    </div>
+  );
+}
