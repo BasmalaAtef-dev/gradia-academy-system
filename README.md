@@ -82,33 +82,29 @@ The project intentionally does not use the Repository Pattern, CQRS/MediatR, or 
 📁 Project Structure
 
 gradia-academy-system/
-│
-├── backend/
-│   ├── Controllers/
-│   ├── DTOs/
-│   ├── Interfaces/
-│   ├── Middleware/
-│   ├── Models/
-│   ├── Services/
-│   ├── database/
-│   │   └── init.sql
-│   ├── appsettings.Example.json
-│   └── Program.cs
-│
-├── frontend/
-│   ├── src/
-│   │   ├── components/
-│   │   ├── context/
-│   │   ├── features/
-│   │   ├── routes/
-│   │   ├── services/
-│   │   │   └── api/
-│   │   └── utils/
-│   └── .env.example
-│
+├── backend/ # ASP.NET Core Web API
+│ ├── Controllers/
+│ ├── DTOs/
+│ ├── Interfaces/
+│ ├── Middleware/
+│ ├── Models/ # EF Core entities (Database First)
+│ ├── Services/
+│ ├── database/
+│ │ └── init.sql # Full schema + demo seed data
+│ ├── appsettings.Example.json
+│ └── Program.cs
+├── frontend/ # React + Vite SPA
+│ ├── src/
+│ │ ├── components/
+│ │ ├── context/
+│ │ ├── features/ # Feature-based pages (auth, courses, etc.)
+│ │ ├── routes/
+│ │ ├── services/
+│ │ │ └── api/ # API client + per-resource services
+│ │ └── utils/
+│ └── .env.example
 ├── docs/
-│   └── screenshots/
-│
+│ └── screenshots/
 └── README.md
 
 🚀 Getting Started
