@@ -25,8 +25,9 @@ builder.Services.AddCors(options =>
 builder.Services.AddControllers();
 
 builder.Services.AddDbContext<AcademyDbContext>(options =>
-    options.UseSqlServer(
-        builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseNpgsql(
+        builder.Configuration.GetConnectionString("DefaultConnection"))
+       .UseSnakeCaseNamingConvention());
 
 builder.Services.AddEndpointsApiExplorer();
 
@@ -96,32 +97,6 @@ builder.Services.AddScoped<IDashboardService, DashboardService>();
 var app = builder.Build();
 
 
-
-/*
-// ⚠️ كود مؤقت لعمل أول Admin — احذفه بعد أول تشغيل ناجح
-using (var scope = app.Services.CreateScope())
-{
-    var context = scope.ServiceProvider.GetRequiredService<AcademyDbContext>();
-
-    bool adminExists = context.Users.Any(u => u.Role == "Admin");
-
-    if (!adminExists)
-    {
-        var admin = new User
-        {
-            FullName = "System Admin",
-            Email = "admin@academyapi.com",
-            PasswordHash = BCrypt.Net.BCrypt.HashPassword("Admin@123"),
-            Role = "Admin",
-            CreatedAt = DateTime.UtcNow
-        };
-
-        context.Users.Add(admin);
-        context.SaveChanges();
-    }
-}
-
-*/
 
 app.UseMiddleware<AcademyAPI.Middleware.GlobalExceptionMiddleware>();
 
