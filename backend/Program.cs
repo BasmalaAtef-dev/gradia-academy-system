@@ -18,7 +18,7 @@ builder.Services.AddCors(options =>
     {
         policy.WithOrigins(
             "http://localhost:5173",
-            "https://YOUR-NETLIFY-APP-NAME.netlify.app"
+            "https://gradia-academy-system.vercel.app" 
 
             )
               .AllowAnyHeader()
