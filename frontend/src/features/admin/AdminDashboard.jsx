@@ -12,6 +12,7 @@ import { dashboardService } from '../../services/api/dashboardService';
 import { enrollmentService } from '../../services/api/enrollmentService';
 import { useAuth } from '../../hooks/useAuth';
 import '../../components/ui/Panel.css';
+import avatar from '../../assets/admin_avatar.png';
 
 export function AdminDashboard() {
   const { session } = useAuth();
@@ -62,7 +63,7 @@ export function AdminDashboard() {
           </div>
         </div>
         <div className="welcome-card__illustration">
-          <img src="\src\assets\admin_avatar.png" alt="" className="welcome-card__image" />
+          <img src={avatar} alt="" className="welcome-card__image" />
         </div>
       </div>
 

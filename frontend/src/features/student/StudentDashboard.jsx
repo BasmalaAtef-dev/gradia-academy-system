@@ -12,6 +12,8 @@ import { enrollmentService } from '../../services/api/enrollmentService';
 import { gradeToLetter, gradeToVariant } from '../../utils/formatters';
 import { useAuth } from '../../hooks/useAuth';
 import '../../components/ui/Panel.css';
+import avatar from '../../assets/student_avatar.png';
+
 
 export function StudentDashboard() {
   const { session } = useAuth();
@@ -64,7 +66,7 @@ export function StudentDashboard() {
           </div>
         </div>
         <div className="welcome-card__illustration">
-          <img src="\src\assets\student_avatar.png" alt="" className="welcome-card__image" />
+          <img src={avatar} alt="" className="welcome-card__image" />
         </div>
       </div>
 

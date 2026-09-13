@@ -1,4 +1,5 @@
-import logo from "/src/assets/logo.png";
+import logoUrl from '../../assets/logo.png';
+
 export function AuthBackground() {
   return (
     <>
@@ -15,7 +16,7 @@ export function AuthBrand() {
     <div className="auth-card__brand">
 
       <div className="auth-card__brand-text">
-              <img src={logo} alt="Logo" className="auth__logo" />
+              <img src={logoUrl} alt="Logo" className="auth__logo" />
         <span className="auth-card__brand-tagline">Academic Performance Platform</span>
       </div>
     </div>
