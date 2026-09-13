@@ -18,8 +18,7 @@ builder.Services.AddCors(options =>
     {
         policy.WithOrigins(
             "http://localhost:5173",
-            "https://gradia-academy-system.vercel.app",
-            "https://gradia-academy-system.netlify.app"
+            "https://gradia-academy-system.vercel.app"
             )
               .AllowAnyHeader()
               .AllowAnyMethod();
