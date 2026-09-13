@@ -18,10 +18,7 @@ builder.Services.AddCors(options =>
     {
         policy.WithOrigins(
             "http://localhost:5173",
-            "https://gradia-academy-system.vercel.app",
-            "https://gradia-academy-system-iuqa32d70-basmala4.vercel.app",
-            "https://gradia-academy-system-r4gg8g2ts-basmala4.vercel.app",
-            "https://gradia-academy-system-parw5aoz4-basmala4.vercel.app"
+            "https://gradia-academy-system.vercel.app"
             )
               .AllowAnyHeader()
               .AllowAnyMethod();
