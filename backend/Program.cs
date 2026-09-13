@@ -30,8 +30,7 @@ builder.Services.AddControllers();
 
 builder.Services.AddDbContext<AcademyDbContext>(options =>
     options.UseNpgsql(
-        builder.Configuration.GetConnectionString("DefaultConnection"))
-       .UseSnakeCaseNamingConvention());
+    builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddEndpointsApiExplorer();
 
