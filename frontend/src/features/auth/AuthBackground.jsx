@@ -1,4 +1,4 @@
-import logo from "src/assets/logo.png";
+import logo from "/src/assets/logo.png";
 export function AuthBackground() {
   return (
     <>
