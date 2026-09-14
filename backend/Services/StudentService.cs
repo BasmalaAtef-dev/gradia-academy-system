@@ -292,7 +292,7 @@ namespace AcademyAPI.Services
                 .ToListAsync();
 
             response.Success = true;
-            response.Message = "Students retrieved successfully. [SCOPED VERSION v2]";
+            response.Message = "Students retrieved successfully.";
             response.Data = new PagedResponse<StudentResponse>
             {
                 Items = students,
