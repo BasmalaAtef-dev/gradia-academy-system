@@ -11,13 +11,15 @@ function getToken() {
   }
 }
 
-/**
- * Core request function. Always resolves to { success, message, data }
- * — same shape the mock services already return — so callers never
- * need to change based on whether they're hitting mock or real API.
- */
-async function request(path, { method = "GET", body, headers = {} } = {}) {
-  const token = getToken();
+  function clearSessionAndRedirect() {
+    localStorage.removeItem("gradia_session");
+    if (window.location.pathname !== "/login") {
+      window.location.href = "/login";
+    }
+  }
+
+  async function request(path, { method = "GET", body, headers = {} } = {}) {
+   const token = getToken();
 
   const finalHeaders = {
     "Content-Type": "application/json",
@@ -36,7 +38,6 @@ async function request(path, { method = "GET", body, headers = {} } = {}) {
       body: body !== undefined ? JSON.stringify(body) : undefined,
     });
   } catch (networkError) {
-    // Backend unreachable, CORS failure, DNS issue, etc.
     return {
       success: false,
       message: "Network error — could not reach the server.",
@@ -44,14 +45,20 @@ async function request(path, { method = "GET", body, headers = {} } = {}) {
     };
   }
 
-  // Try to parse JSON regardless of status code, since the backend's
-  // GlobalExceptionMiddleware and ServiceResponse wrapper return JSON
-  // bodies even on 4xx/5xx.
+
+  if (response.status === 401) {
+    clearSessionAndRedirect();
+    return {
+      success: false,
+      message: "Your session has expired. Please sign in again.",
+      data: null,
+    };
+  }
+
   let payload = null;
   try {
     payload = await response.json();
   } catch {
-    // No JSON body (e.g. 204 No Content, or an unexpected empty response)
     payload = null;
   }
 
@@ -74,10 +81,6 @@ async function request(path, { method = "GET", body, headers = {} } = {}) {
     };
   }
 
-  // Normalize casing: backend serializes as camelCase by default in
-  // ASP.NET Core (System.Text.Json), so this should already match
-  // { success, message, data }. The PascalCase fallback below is a
-  // safety net in case any endpoint's JSON options differ.
   return {
     success: payload.success ?? payload.Success ?? false,
     message: payload.message ?? payload.Message ?? "",

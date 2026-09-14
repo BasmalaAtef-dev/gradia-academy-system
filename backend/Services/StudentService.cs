@@ -250,5 +250,61 @@ namespace AcademyAPI.Services
         }
 
 
+        public async Task<ServiceResponse<PagedResponse<StudentResponse>>> GetAllStudentsAsync(PaginationParams paginationParams, int? teacherId)
+        {
+            var response = new ServiceResponse<PagedResponse<StudentResponse>>();
+
+            var query = _context.Students
+                .Include(s => s.User)
+                .AsQueryable();
+
+            if (teacherId.HasValue)
+            {
+                query = query.Where(s => s.Enrollments.Any(e => e.Course.TeacherId == teacherId.Value));
+            }
+
+            if (!string.IsNullOrWhiteSpace(paginationParams.SearchTerm))
+            {
+                var term = paginationParams.SearchTerm.Trim().ToLower();
+                query = query.Where(s =>
+                    s.User.FullName.ToLower().Contains(term) ||
+                    s.User.Email.ToLower().Contains(term));
+            }
+
+            query = query.OrderBy(s => s.StudentId);
+
+            var totalCount = await query.CountAsync();
+
+            var students = await query
+                .Skip((paginationParams.PageNumber - 1) * paginationParams.PageSize)
+                .Take(paginationParams.PageSize)
+                .Select(s => new StudentResponse
+                {
+                    StudentId = s.StudentId,
+                    UserId = s.UserId,
+                    FullName = s.User.FullName,
+                    Email = s.User.Email,
+                    DateOfBirth = s.DateOfBirth,
+                    Phone = s.Phone,
+                    Address = s.Address,
+                    CreatedAt = s.User.CreatedAt
+                })
+                .ToListAsync();
+
+            response.Success = true;
+            response.Message = "Students retrieved successfully.";
+            response.Data = new PagedResponse<StudentResponse>
+            {
+                Items = students,
+                PageNumber = paginationParams.PageNumber,
+                PageSize = paginationParams.PageSize,
+                TotalCount = totalCount,
+                TotalPages = (int)Math.Ceiling(totalCount / (double)paginationParams.PageSize)
+            };
+
+            return response;
+        }
+
+
     }
 }

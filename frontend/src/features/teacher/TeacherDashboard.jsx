@@ -44,7 +44,6 @@ export function TeacherDashboard() {
 
   useEffect(() => {
     loadData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (status === 'loading') return <LoadingState label="Loading your dashboard..." />;

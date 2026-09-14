@@ -2,6 +2,7 @@
 using AcademyAPI.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace AcademyAPI.Controllers
 {
@@ -10,30 +11,43 @@ namespace AcademyAPI.Controllers
     public class StudentController : ControllerBase
     {
         private readonly IStudentService _studentService;
+        private readonly ITeacherService _teacherService;
 
-        public StudentController(IStudentService studentService)
+        public StudentController(IStudentService studentService, ITeacherService teacherService)
         {
             _studentService = studentService;
+            _teacherService = teacherService;
+        }
+
+        private async Task<int?> GetRequestingTeacherIdAsync()
+        {
+            if (!User.IsInRole("Teacher"))
+                return null;
+
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+
+            if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out int userId))
+                return null;
+
+            return await _teacherService.GetTeacherIdByUserIdAsync(userId);
         }
 
         [HttpGet]
         [Authorize(Roles = "Admin,Teacher")]
         public async Task<IActionResult> GetAllStudents([FromQuery] PaginationParams paginationParams)
         {
-            var result = await _studentService.GetAllStudentsAsync(paginationParams);
+            var teacherId = await GetRequestingTeacherIdAsync();
+            var result = await _studentService.GetAllStudentsAsync(paginationParams, teacherId);
             return Ok(result);
         }
 
-        
-         [HttpGet("all")]
+        [HttpGet("all")]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetAllStudentsUnpaged()
         {
             var result = await _studentService.GetAllStudentsUnpagedAsync();
             return Ok(result);
         }
-
-
 
         [HttpGet("{studentId}")]
         [Authorize(Roles = "Admin,Teacher")]

@@ -2,11 +2,6 @@ import { apiClient } from "./apiClient";
 
 const SESSION_KEY = "gradia_session";
 
-/**
- * Decodes a JWT's payload WITHOUT verifying its signature.
- * Signature verification is the server's job — we only need to
- * read the claims (sub, email) that aren't included in LoginResponse.
- */
 function decodeJwtPayload(token) {
   try {
     const base64Url = token.split(".")[1];
@@ -38,14 +33,12 @@ function buildSession(loginData) {
 export const authService = {
   async login({ email, password }) {
     const result = await apiClient.post("/Auth/login", { email, password });
-
     if (!result.success || !result.data) {
       return result;
     }
 
     const session = buildSession(result.data);
     localStorage.setItem(SESSION_KEY, JSON.stringify(session));
-
     return { ...result, data: session };
   },
 
@@ -61,8 +54,6 @@ export const authService = {
   },
 
   async logout() {
-    // JWT auth is stateless — there's no server-side session to invalidate,
-    // so logout is just clearing the locally stored token.
     localStorage.removeItem(SESSION_KEY);
     return { success: true, message: "Signed out.", data: null };
   },
@@ -71,8 +62,13 @@ export const authService = {
     const raw = localStorage.getItem(SESSION_KEY);
     if (!raw) return null;
     try {
-      return JSON.parse(raw);
-    } catch {
+      const session = JSON.parse(raw);
+      const claims = decodeJwtPayload(session?.token);
+      if (claims?.exp && Date.now() >= claims.exp * 1000) {
+        localStorage.removeItem(SESSION_KEY);
+        return null;
+      }
+      return session;    } catch {
       return null;
     }
   },

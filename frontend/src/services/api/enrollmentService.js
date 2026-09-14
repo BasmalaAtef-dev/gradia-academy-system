@@ -10,9 +10,6 @@ function buildQuery({ pageNumber = 1, pageSize = 10, searchTerm = "" } = {}) {
 }
 
 export const enrollmentService = {
-  // teacherId kept in the signature only for compatibility with existing
-  // callers — it is intentionally NOT sent to the backend. The server
-  // derives the acting teacher from the JWT and scopes results itself.
   async getAll({ pageNumber, pageSize, searchTerm } = {}) {
     const query = buildQuery({ pageNumber, pageSize, searchTerm });
     return apiClient.get(`/Enrollment?${query}`);

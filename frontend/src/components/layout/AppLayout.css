@@ -3,10 +3,6 @@
   background: var(--color-bg);
 }
 
-/* ---- Global animated background ---- */
-/* Fixed to the viewport, rendered once at the layout level so it appears
-   behind the header, sidebar, and every page routed through AppLayout
-   (Dashboard, Students, Teachers, Courses, Enrollments, Grades, Profile...). */
 .app-bg {
   position: fixed;
   inset: 0;

@@ -51,7 +51,6 @@
   to { transform: rotate(360deg); }
 }
 
-/* Skeleton loading */
 .skeleton {
   background: linear-gradient(90deg, var(--color-surface-muted) 25%, #dcecec 37%, var(--color-surface-muted) 63%);
   background-size: 400% 100%;
